@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using NUnit.Framework;
+using System.Reflection;
+using System.Runtime.ExceptionServices;
 
 namespace GUnit
 {
@@ -58,16 +60,37 @@ namespace GUnit
                 
                 try
                 {
+
                     test.Invoke(obj, null);
                     results.Add(new GUnitTestResult(testName));
                 }
-                catch (GUnitException ex) 
+                catch(TargetInvocationException baseEx) 
                 {
-                    results.Add(new GUnitTestResult(testName, ex));
-                }
-                catch(Exception ex) 
-                {
-                    results.Add(new GUnitTestResult(testName, ex));
+                    // Reflection causes exceptions throwin from within an invoked method to wrap the exception
+                    // Use the below object to unwrap the exception and throw the actual exception we received
+                    try
+                    {
+                        if(baseEx.InnerException != null)
+                        {
+                            ExceptionDispatchInfo.Capture(baseEx.InnerException).Throw();
+                        }
+                        else
+                        {
+                            ExceptionDispatchInfo.Capture(baseEx).Throw();
+                        }
+                    }
+                    catch (SuccessException)
+                    {
+                        results.Add(new GUnitTestResult(testName));
+                    }
+                    catch (AssertionException ex)
+                    {
+                        results.Add(new GUnitTestResult(testName, ex));
+                    }
+                    catch (Exception ex)
+                    {
+                        results.Add(new GUnitTestResult(testName, ex));
+                    }
                 }
 
                 teardownMethod?.Invoke(obj, null);

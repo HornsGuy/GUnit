@@ -12,13 +12,13 @@ namespace NUnitTestProject.TestClasses
         [GUnitTest]
         public void FailingTest()
         {
-            GUnitAssert.IsTrue(false);
+            Assert.That(false, Is.True);
         }
 
         [GUnitTest]
         public void PassingTest()
         {
-            GUnitAssert.IsTrue(true);
+            Assert.That(true, Is.True);
         }
     }
 }

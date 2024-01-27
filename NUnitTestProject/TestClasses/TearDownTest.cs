@@ -18,19 +18,19 @@ namespace NUnitTestProject.TestClasses
         [GUnitTest]
         public void Test1()
         {
-            GUnitAssert.AreEqual(1, value);
+            Assert.That(value, Is.EqualTo(1));
         }
 
         [GUnitTest]
         public void Test2()
         {
-            GUnitAssert.AreEqual(1, value);
+            Assert.That(value, Is.EqualTo(1));
         }
 
         [GUnitTest]
         public void Test3()
         {
-            GUnitAssert.AreEqual(1, value);
+            Assert.That(value, Is.EqualTo(1));
         }
 
         [GUnitTearDown]

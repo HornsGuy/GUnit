@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ namespace GUnit
             Passed = true;
         }
 
-        public GUnitTestResult(string name, GUnitException gUnitException)
+        public GUnitTestResult(string name, AssertionException gUnitException)
         {
             Name = name;
             Passed = false;

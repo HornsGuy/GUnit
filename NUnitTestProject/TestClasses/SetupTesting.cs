@@ -18,7 +18,7 @@ namespace NUnitTestProject.TestClasses
         [GUnitTest]
         public void Test()
         {
-            GUnitAssert.AreEqual(1, value);
+            Assert.That(value, Is.EqualTo(1));
         }
 
         [GUnitTearDown]

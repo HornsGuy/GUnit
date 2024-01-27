@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using NUnit.Framework;
 namespace NUnitTestProject.TestClasses
 {
     public class FailingTest
@@ -12,7 +12,7 @@ namespace NUnitTestProject.TestClasses
         [GUnitTest]
         public void Test()
         {
-            GUnitAssert.IsTrue(false);
+            Assert.Fail();
         }
     }
 }

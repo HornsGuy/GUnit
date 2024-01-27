@@ -11,7 +11,7 @@ namespace NUnitTestProject.TestClasses
         [GUnitTest]
         public void Test()
         {
-            GUnitAssert.IsTrue(true);
+            Assert.Pass();
         }
     }
 }

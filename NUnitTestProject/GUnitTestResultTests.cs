@@ -13,21 +13,21 @@ namespace NUnitTestProject
         public void PassingTest()
         {
             GUnitTestResult gUnitTestResult = new GUnitTestResult("");
-            Assert.IsTrue(gUnitTestResult.Passed);
+            Assert.That(gUnitTestResult.Passed,Is.True);
         }
 
         [Test]
         public void FailingTest()
         {
-            GUnitTestResult gUnitTestResult = new GUnitTestResult("",new GUnitException("something"));
-            Assert.IsFalse(gUnitTestResult.Passed);
+            GUnitTestResult gUnitTestResult = new GUnitTestResult("",new AssertionException("something"));
+            Assert.That(gUnitTestResult.Passed, Is.False);
         }
 
         [Test]
         public void ExceptionTest()
         {
             GUnitTestResult gUnitTestResult = new GUnitTestResult("", new Exception("Exception"));
-            Assert.IsFalse(gUnitTestResult.Passed);
+            Assert.That(gUnitTestResult.Passed, Is.False);
         }
     }
 }

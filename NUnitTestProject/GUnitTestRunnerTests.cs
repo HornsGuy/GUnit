@@ -14,8 +14,9 @@ namespace NUnitTestProject
         {
             GUnitResults results = GUnitTestRunner.RunTests<PassingTest>();
 
-            Assert.IsTrue(results.AllTestsPassed);
-            Assert.AreEqual(results.GenerateReport(),"Test 'NUnitTestProject.TestClasses.PassingTest.Test' Passed");
+            string expected = "Test 'NUnitTestProject.TestClasses.PassingTest.Test' Passed";
+            Assert.That(results.AllTestsPassed, Is.True);
+            Assert.That(results.GenerateReport(), Is.EqualTo(expected));
         }
 
         [Test]
@@ -23,10 +24,11 @@ namespace NUnitTestProject
         {
             GUnitResults results = GUnitTestRunner.RunTests<FailingTest>();
 
-            Assert.IsFalse(results.AllTestsPassed);
-            string expected = "Test 'NUnitTestProject.TestClasses.FailingTest.Test' Failed\nException has been thrown by the target of an invocation.\n   at System.RuntimeMethodHandle.InvokeMethod(Object target, Span`1& arguments, Signature sig, Boolean constructor, Boolean wrapExceptions)\r\n   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)\r\n   at System.Reflection.MethodBase.Invoke(Object obj, Object[] parameters)\r\n   at GUnit.GUnitTestRunner.ExecuteTests[T](String className, List`1 tests, MethodInfo setupMethod, MethodInfo teardownMethod) in C:\\Users\\tevan\\source\\repos\\GUnit\\GUnit\\GUnitTestRunner.cs:line 61";
+            string expected = "Test 'NUnitTestProject.TestClasses.FailingTest.Test' Failed\n\n   at NUnit.Framework.Assert.ReportFailure(String message)\r\n   at NUnit.Framework.Assert.Fail(String message)\r\n   at NUnit.Framework.Assert.Fail()\r\n   at NUnitTestProject.TestClasses.FailingTest.Test() in C:\\Users\\tevan\\source\\repos\\GUnit\\NUnitTestProject\\TestClasses\\FailingTest.cs:line 15\r\n--- End of stack trace from previous location ---\r\n   at GUnit.GUnitTestRunner.ExecuteTests[T](String className, List`1 tests, MethodInfo setupMethod, MethodInfo teardownMethod) in C:\\Users\\tevan\\source\\repos\\GUnit\\GUnit\\GUnitTestRunner.cs:line 75";
             string actual = results.GenerateReport();
-            Assert.AreEqual(actual, expected);
+            Assert.That(results.AllTestsPassed, Is.False);
+            Assert.That(actual, Is.EqualTo(expected));
+            Assert.Pass(); // Must be called due to running Assert.Fail within our example tests. Must be some kind of static somewhere in NUnit tracking this stuff
         }
 
         [Test]
@@ -34,11 +36,11 @@ namespace NUnitTestProject
         {
             GUnitResults results = GUnitTestRunner.RunTests<BothFailingAndPassingTest>();
 
-            Assert.IsFalse(results.AllTestsPassed);
-            string expected = "Test 'NUnitTestProject.TestClasses.BothFailingAndPassingTest.FailingTest' Failed\nException has been thrown by the target of an invocation.\n   at System.RuntimeMethodHandle.InvokeMethod(Object target, Span`1& arguments, Signature sig, Boolean constructor, Boolean wrapExceptions)\r\n   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)\r\n   at System.Reflection.MethodBase.Invoke(Object obj, Object[] parameters)\r\n   at GUnit.GUnitTestRunner.ExecuteTests[T](String className, List`1 tests, MethodInfo setupMethod, MethodInfo teardownMethod) in C:\\Users\\tevan\\source\\repos\\GUnit\\GUnit\\GUnitTestRunner.cs:line 61\r\n";
-            expected += "Test 'NUnitTestProject.TestClasses.BothFailingAndPassingTest.PassingTest' Passed";
+            string expected = "Test 'NUnitTestProject.TestClasses.BothFailingAndPassingTest.FailingTest' Failed\n  Assert.That(false, Is.True)\r\n  Expected: True\r\n  But was:  False\r\n\n   at NUnit.Framework.Assert.ReportFailure(String message)\r\n   at NUnit.Framework.Assert.ReportFailure(ConstraintResult result, String message, String actualExpression, String constraintExpression)\r\n   at NUnit.Framework.Assert.That[TActual](TActual actual, IResolveConstraint expression, NUnitString message, String actualExpression, String constraintExpression)\r\n   at NUnitTestProject.TestClasses.BothFailingAndPassingTest.FailingTest() in C:\\Users\\tevan\\source\\repos\\GUnit\\NUnitTestProject\\TestClasses\\BothFailingAndPassingTest.cs:line 15\r\n--- End of stack trace from previous location ---\r\n   at GUnit.GUnitTestRunner.ExecuteTests[T](String className, List`1 tests, MethodInfo setupMethod, MethodInfo teardownMethod) in C:\\Users\\tevan\\source\\repos\\GUnit\\GUnit\\GUnitTestRunner.cs:line 75\r\nTest 'NUnitTestProject.TestClasses.BothFailingAndPassingTest.PassingTest' Passed";
             string actual = results.GenerateReport();
-            Assert.AreEqual(actual, expected);
+            Assert.That(results.AllTestsPassed, Is.False);
+            Assert.That(actual, Is.EqualTo(expected));
+            Assert.Pass(); // Must be called due to running Assert.Fail within our example tests. Must be some kind of static somewhere in NUnit tracking this stuff
         }
 
         [Test]
@@ -46,7 +48,7 @@ namespace NUnitTestProject
         {
             GUnitResults results = GUnitTestRunner.RunTests<SetupTesting>();
 
-            Assert.IsTrue(results.AllTestsPassed);
+            Assert.That(results.AllTestsPassed, Is.True);
         }
 
         [Test]
@@ -54,7 +56,7 @@ namespace NUnitTestProject
         {
             GUnitResults results = GUnitTestRunner.RunTests<TearDownTest>();
 
-            Assert.IsTrue(results.AllTestsPassed);
+            Assert.That(results.AllTestsPassed, Is.True);
         }
     }
 }

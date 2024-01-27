@@ -21,7 +21,7 @@ namespace NUnitTestProject
             List<GUnitTestResult> results = new List<GUnitTestResult>();
             results.Add(new GUnitTestResult("TestName"));
             GUnitResults testRunResults = new GUnitResults(results);
-            Assert.IsTrue(testRunResults.AllTestsPassed);
+            Assert.That(testRunResults.AllTestsPassed, Is.True);
         }
 
         [Test]
@@ -31,7 +31,7 @@ namespace NUnitTestProject
             results.Add(new GUnitTestResult("TestName"));
             results.Add(new GUnitTestResult("TestFailed",new Exception("Message")));
             GUnitResults testRunResults = new GUnitResults(results);
-            Assert.IsFalse(testRunResults.AllTestsPassed);
+            Assert.That(testRunResults.AllTestsPassed, Is.False);
         }
 
         [Test]
@@ -39,9 +39,9 @@ namespace NUnitTestProject
         {
             List<GUnitTestResult> results = new List<GUnitTestResult>();
             results.Add(new GUnitTestResult("TestName"));
-            results.Add(new GUnitTestResult("TestFailed", new GUnitException("Message")));
+            results.Add(new GUnitTestResult("TestFailed", new AssertionException("Message")));
             GUnitResults testRunResults = new GUnitResults(results);
-            Assert.IsFalse(testRunResults.AllTestsPassed);
+            Assert.That(testRunResults.AllTestsPassed, Is.False);
         }
 
         [Test]
@@ -50,9 +50,9 @@ namespace NUnitTestProject
             List<GUnitTestResult> results = new List<GUnitTestResult>();
             results.Add(new GUnitTestResult("TestName"));
             results.Add(new GUnitTestResult("TestFailed1", new Exception("Message")));
-            results.Add(new GUnitTestResult("TestFailed2", new GUnitException("Message")));
+            results.Add(new GUnitTestResult("TestFailed2", new AssertionException("Message")));
             GUnitResults testRunResults = new GUnitResults(results);
-            Assert.IsFalse(testRunResults.AllTestsPassed);
+            Assert.That(testRunResults.AllTestsPassed, Is.False);
         }
     }
 }
