@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace GUnit
 {
-    public class GUnitTestRunResults
+    public class GUnitResults
     {
         List<GUnitTestResult> Results;
         public bool AllTestsPassed { get; private set; } = false;
-        public GUnitTestRunResults(List<GUnitTestResult> results) 
+        public GUnitResults(List<GUnitTestResult> results) 
         {
             Results = results;
             CheckForFailingTests();

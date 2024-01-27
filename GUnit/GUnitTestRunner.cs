@@ -4,7 +4,7 @@ namespace GUnit
 {
     public class GUnitTestRunner 
     {
-        public static GUnitTestRunResults RunTests<T>() where T : new()
+        public static GUnitResults RunTests<T>() where T : new()
         {
             MethodInfo[] methods = typeof(T).GetMethods();
 
@@ -44,7 +44,7 @@ namespace GUnit
             return ExecuteTests<T>(typeof(T).ToString(), tests, setupMethod, tearDownMethod);
         }
 
-        private static GUnitTestRunResults ExecuteTests<T>(string className, List<MethodInfo> tests, MethodInfo? setupMethod, MethodInfo? teardownMethod) where T : new()
+        private static GUnitResults ExecuteTests<T>(string className, List<MethodInfo> tests, MethodInfo? setupMethod, MethodInfo? teardownMethod) where T : new()
         {
             List<GUnitTestResult> results = new List<GUnitTestResult>();
 
@@ -73,7 +73,7 @@ namespace GUnit
                 teardownMethod?.Invoke(obj, null);
             }
 
-            return new GUnitTestRunResults(results);
+            return new GUnitResults(results);
         }
         
     }
