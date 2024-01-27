@@ -45,6 +45,20 @@ namespace NUnitTestProject
         }
 
         [Test]
+        public void AssertEqualTypeDiff()
+        {
+            // Type diff, but values are the same
+            try
+            {
+                GUnitAssert.AreEqual(1.0f, 1);
+            }
+            catch (GUnitException)
+            {
+                Assert.Fail("Equal failed when it shouldn't have");
+            }
+        }
+
+        [Test]
         public void AssertNotEqual()
         {
             // Value difference
@@ -61,10 +75,11 @@ namespace NUnitTestProject
             try
             {
                 GUnitAssert.AreNotEqual(2, 2.0);
+                Assert.Fail("Not Equal passed when it shouldn't have");
             }
             catch (GUnitException)
             {
-                Assert.Fail("Not Equal failed when it shouldn't have");
+                
             }
 
             // Equal
