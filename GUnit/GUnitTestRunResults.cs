@@ -9,9 +9,24 @@ namespace GUnit
     public class GUnitTestRunResults
     {
         List<GUnitTestResult> Results;
+        public bool AllTestsPassed { get; private set; } = false;
         public GUnitTestRunResults(List<GUnitTestResult> results) 
         {
             Results = results;
+            CheckForFailingTests();
+        }
+
+        private void CheckForFailingTests()
+        {
+            foreach (var result in Results)
+            {
+                if(!result.Passed)
+                {
+                    AllTestsPassed = false;
+                    return;
+                }
+            }
+            AllTestsPassed = true;
         }
 
         public string GenerateReport()
@@ -21,13 +36,15 @@ namespace GUnit
             {
                 if(result.Passed)
                 {
-                    toReturn += result.ShortDescription() + "\n";
+                    toReturn += result.ShortDescription() + "\r\n";
                 }
                 else
                 {
-                    toReturn += result.LongDescription() + "\n";
+                    toReturn += result.LongDescription() + "\r\n";
                 }
             }
+
+            toReturn = toReturn.Trim();
 
             return toReturn;
         }

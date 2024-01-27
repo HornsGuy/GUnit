@@ -2,9 +2,9 @@
 
 namespace GUnit
 {
-    public class GUnitTestRunner<T> where T : new()
+    public class GUnitTestRunner 
     {
-        public GUnitTestRunResults RunTests()
+        public static GUnitTestRunResults RunTests<T>() where T : new()
         {
             MethodInfo[] methods = typeof(T).GetMethods();
 
@@ -21,30 +21,30 @@ namespace GUnit
                     {
                         tests.Add(method);
                     }
-                    else if (attribute.AttributeType == typeof(GUnitSetup))
+                    else if (attribute.AttributeType == typeof(GUnitSetUp))
                     {
                         if(setupMethod != null)
                         {
-                            throw new Exception("Multiple Setup methods defined. Only a single Setup method can be defined per test class");
+                            throw new Exception("Multiple GUnitSetup methods defined. Only a single GUnitSetup method can be defined per test class");
                         }
 
                         setupMethod = method;
                     }
-                    else if (attribute.AttributeType == typeof(GUnitTeardown))
+                    else if (attribute.AttributeType == typeof(GUnitTearDown))
                     {
                         if (tearDownMethod != null)
                         {
-                            throw new Exception("Multiple TearDown methods defined. Only a single TearDown method can be defined per test class");
+                            throw new Exception("Multiple GUnitTeardown methods defined. Only a single GUnitTeardown method can be defined per test class");
                         }
                         tearDownMethod = method;
                     }
                 }
             }
 
-            return ExecuteTests(typeof(T).ToString(), tests, setupMethod, tearDownMethod);
+            return ExecuteTests<T>(typeof(T).ToString(), tests, setupMethod, tearDownMethod);
         }
 
-        private GUnitTestRunResults ExecuteTests(string className, List<MethodInfo> tests, MethodInfo? setupMethod, MethodInfo? teardownMethod)
+        private static GUnitTestRunResults ExecuteTests<T>(string className, List<MethodInfo> tests, MethodInfo? setupMethod, MethodInfo? teardownMethod) where T : new()
         {
             List<GUnitTestResult> results = new List<GUnitTestResult>();
 

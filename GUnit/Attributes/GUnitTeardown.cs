@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GUnit
 {
-    public class GUnitTeardown : Attribute
+    public class GUnitTearDown : Attribute
     {
     }
 }
