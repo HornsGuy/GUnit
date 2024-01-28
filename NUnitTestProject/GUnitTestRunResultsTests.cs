@@ -20,7 +20,7 @@ namespace NUnitTestProject
         {
             List<GUnitTestResult> results = new List<GUnitTestResult>();
             results.Add(new GUnitTestResult("TestName"));
-            GUnitResults testRunResults = new GUnitResults(results);
+            GUnitResults testRunResults = new GUnitResults("className",results);
             Assert.That(testRunResults.AllTestsPassed, Is.True);
         }
 
@@ -30,7 +30,7 @@ namespace NUnitTestProject
             List<GUnitTestResult> results = new List<GUnitTestResult>();
             results.Add(new GUnitTestResult("TestName"));
             results.Add(new GUnitTestResult("TestFailed",new Exception("Message")));
-            GUnitResults testRunResults = new GUnitResults(results);
+            GUnitResults testRunResults = new GUnitResults("className",results);
             Assert.That(testRunResults.AllTestsPassed, Is.False);
         }
 
@@ -40,7 +40,7 @@ namespace NUnitTestProject
             List<GUnitTestResult> results = new List<GUnitTestResult>();
             results.Add(new GUnitTestResult("TestName"));
             results.Add(new GUnitTestResult("TestFailed", new AssertionException("Message")));
-            GUnitResults testRunResults = new GUnitResults(results);
+            GUnitResults testRunResults = new GUnitResults("className",results);
             Assert.That(testRunResults.AllTestsPassed, Is.False);
         }
 
@@ -51,7 +51,7 @@ namespace NUnitTestProject
             results.Add(new GUnitTestResult("TestName"));
             results.Add(new GUnitTestResult("TestFailed1", new Exception("Message")));
             results.Add(new GUnitTestResult("TestFailed2", new AssertionException("Message")));
-            GUnitResults testRunResults = new GUnitResults(results);
+            GUnitResults testRunResults = new GUnitResults("className",results);
             Assert.That(testRunResults.AllTestsPassed, Is.False);
         }
     }

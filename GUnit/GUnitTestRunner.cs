@@ -96,7 +96,7 @@ namespace GUnit
                 teardownMethod?.Invoke(obj, null);
             }
 
-            return new GUnitResults(results);
+            return new GUnitResults(className,results);
         }
         
     }

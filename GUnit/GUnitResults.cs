@@ -9,9 +9,11 @@ namespace GUnit
     public class GUnitResults
     {
         List<GUnitTestResult> Results;
+        public string TestClassName { get; private set; }
         public bool AllTestsPassed { get; private set; } = false;
-        public GUnitResults(List<GUnitTestResult> results) 
+        public GUnitResults(string testClassName, List<GUnitTestResult> results) 
         {
+            TestClassName = testClassName;
             Results = results;
             CheckForFailingTests();
         }
