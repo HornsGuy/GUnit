@@ -10,7 +10,10 @@ namespace GUnit
     {
         List<GUnitTestResult> Results;
         public string TestClassName { get; private set; }
-        public bool AllTestsPassed { get; private set; } = false;
+        public bool AllTestsPassed { get; private set; } = true;
+        public int TotalTestCount {  get; private set; }
+        public int FailingTestCount { get; private set; }
+        public int PassingTestCount { get; private set; }
         public GUnitResults(string testClassName, List<GUnitTestResult> results) 
         {
             TestClassName = testClassName;
@@ -24,11 +27,12 @@ namespace GUnit
             {
                 if(!result.Passed)
                 {
+                    FailingTestCount++;
                     AllTestsPassed = false;
-                    return;
                 }
             }
-            AllTestsPassed = true;
+            TotalTestCount = Results.Count;
+            PassingTestCount = Results.Count - FailingTestCount;
         }
 
         public string GenerateReport()
@@ -38,12 +42,13 @@ namespace GUnit
             {
                 if(result.Passed)
                 {
-                    toReturn += result.ShortDescription() + "\r\n";
+                    toReturn += result.ShortDescription();
                 }
                 else
                 {
-                    toReturn += result.LongDescription() + "\r\n";
+                    toReturn += result.LongDescription();
                 }
+                toReturn += "\r\n\r\n";
             }
 
             toReturn = toReturn.Trim();
