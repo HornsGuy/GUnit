@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace NUnitTestProject.TestClasses
 {
-    public class FilterTest
+    public class IgnoreTest
     {
-        [GUnitIgnore]
         [GUnitTest]
         public void Test1()
         {
@@ -17,12 +16,12 @@ namespace NUnitTestProject.TestClasses
         }
 
         [GUnitTest]
-        [GUnitIgnore]
         public void Test2()
         {
             Assert.Fail();
         }
 
+        [GUnitFilter]
         [GUnitTest]
         public void Test3()
         {

@@ -18,8 +18,9 @@ namespace GUnit
             bool filterActive = false;
             foreach (MethodInfo method in methods)
             {
+                bool ignoreTest = false;
                 foreach (var attribute in method.CustomAttributes)
-                {
+                {   
                     if(!filterActive && attribute.AttributeType == typeof(GUnitTest))
                     {
                         tests.Add(method);
@@ -47,6 +48,16 @@ namespace GUnit
                         tests.Add(method);
                         filterActive = true;
                     }
+                    else if(attribute.AttributeType == typeof (GUnitIgnore))
+                    {
+                        ignoreTest = true;
+                    }
+                }
+
+                // Remove test if being ignored
+                if (ignoreTest)
+                {
+                    tests.RemoveAt(tests.Count - 1);
                 }
             }
 
