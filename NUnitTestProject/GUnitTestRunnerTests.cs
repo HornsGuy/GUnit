@@ -58,5 +58,12 @@ namespace NUnitTestProject
 
             Assert.That(results.AllTestsPassed, Is.True);
         }
+
+        [Test]
+        public void FilterTest()
+        {
+            GUnitResults results = GUnitTestRunner.RunTests<FilterTest>();
+            Assert.That(results.AllTestsPassed, Is.True);
+        }
     }
 }

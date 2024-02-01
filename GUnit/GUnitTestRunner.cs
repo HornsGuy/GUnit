@@ -15,11 +15,12 @@ namespace GUnit
             MethodInfo? setupMethod = null;
             MethodInfo? tearDownMethod = null;
 
+            bool filterActive = false;
             foreach (MethodInfo method in methods)
             {
                 foreach (var attribute in method.CustomAttributes)
                 {
-                    if(attribute.AttributeType == typeof(GUnitTest))
+                    if(!filterActive && attribute.AttributeType == typeof(GUnitTest))
                     {
                         tests.Add(method);
                     }
@@ -39,6 +40,12 @@ namespace GUnit
                             throw new Exception("Multiple GUnitTeardown methods defined. Only a single GUnitTeardown method can be defined per test class");
                         }
                         tearDownMethod = method;
+                    }
+                    else if(attribute.AttributeType == typeof(GUnitFilter))
+                    {
+                        tests.Clear();
+                        tests.Add(method);
+                        filterActive = true;
                     }
                 }
             }
